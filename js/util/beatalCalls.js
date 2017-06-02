@@ -9,6 +9,9 @@ global.beatal = function beatalCall(type,title,text,textBtnClose,actionBtnText,a
   //Put text Button Close
   if(textBtnClose!=null){
     $(modalTemplateHTML).find(".btn.btn-default").html(textBtnClose);
+    $(modalTemplateHTML).find(".btn.btn-default").click(function(){
+                                                          clearModal()
+                                                        });
   }
   //Put icon type before the title
   if(type==="warning"){
@@ -21,13 +24,25 @@ global.beatal = function beatalCall(type,title,text,textBtnClose,actionBtnText,a
   //Put Button Action
   if(actionBtnText!=null){
     $(modalTemplateHTML).find(".modal-footer").append(actionBtnHTML);
-    $(modalTemplateHTML).find(".btn.btn-primary").html(actionBtnText);
+    $(modalTemplateHTML).find(".btn.btn-info").html(actionBtnText);
   }
   //Put action button
   if(actionBtnFunction!=null){
-    $(actionBtnHTML).click(actionBtnFunction);
+    $(actionBtnHTML).click(function(){
+                              actionBtnFunction();
+                              $(modalTemplateHTML).find(".btn.btn-default").click();
+                             });
   }
 
   //Open modal
+  //$(modalTemplateHTML).modal('show');
+  $("body").append("<div id='tempDivBeatal'></div>");
+  $("#tempDivBeatal").append($(modalTemplateHTML));
   $(modalTemplateHTML).modal('show');
+}
+
+global.clearModal = function clearModal(){
+  $('body').removeClass('modal-open');
+  $('.modal-backdrop').remove();
+  $("#tempDivBeatal").remove();
 }

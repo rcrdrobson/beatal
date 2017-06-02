@@ -17,6 +17,9 @@ global.beatal = function beatalCall(type, title, text, textBtnClose, actionBtnTe
   //Put text Button Close
   if (textBtnClose != null) {
     $(_exportSingleModal.modalTemplateHTML).find(".btn.btn-default").html(textBtnClose);
+    $(_exportSingleModal.modalTemplateHTML).find(".btn.btn-default").click(function () {
+      clearModal();
+    });
   }
   //Put icon type before the title
   if (type === "warning") {
@@ -29,16 +32,29 @@ global.beatal = function beatalCall(type, title, text, textBtnClose, actionBtnTe
   //Put Button Action
   if (actionBtnText != null) {
     $(_exportSingleModal.modalTemplateHTML).find(".modal-footer").append(_exportSingleModal.actionBtnHTML);
-    $(_exportSingleModal.modalTemplateHTML).find(".btn.btn-primary").html(actionBtnText);
+    $(_exportSingleModal.modalTemplateHTML).find(".btn.btn-info").html(actionBtnText);
   }
   //Put action button
   if (actionBtnFunction != null) {
-    $(_exportSingleModal.actionBtnHTML).click(actionBtnFunction);
+    $(_exportSingleModal.actionBtnHTML).click(function () {
+      actionBtnFunction();
+      $(_exportSingleModal.modalTemplateHTML).find(".btn.btn-default").click();
+    });
   }
 
   //Open modal
+  //$(modalTemplateHTML).modal('show');
+  $("body").append("<div id='tempDivBeatal'></div>");
+  $("#tempDivBeatal").append($(_exportSingleModal.modalTemplateHTML));
   $(_exportSingleModal.modalTemplateHTML).modal('show');
 }; //Import the util datas
+
+
+global.clearModal = function clearModal() {
+  $('body').removeClass('modal-open');
+  $('.modal-backdrop').remove();
+  $("#tempDivBeatal").remove();
+};
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./exportSingleModal":3}],3:[function(require,module,exports){
@@ -50,10 +66,10 @@ Object.defineProperty(exports, "__esModule", {
 //A single modal template Boostrap
 var modalTemplateHTML = $.parseHTML('<!-- Modal -->' + '<div class="modal fade" id="beatalPluginModal" role="dialog">' + '<div class="modal-dialog modal-sm">' + '<!-- Modal content-->' + '<div class="modal-content">' + '<div class="modal-header">'
 //+'<button type="button" class="close" data-dismiss="modal">&times;</button>'
-+ '<h4 class="modal-title">Modal Header</h4>' + '</div>' + '<div class="modal-body">' + '<p>Some text in the modal.</p>' + '</div>' + '<div class="modal-footer">' + '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>' + '</div>' + '</div>' + '</div>' + '</div>');
++ '<h4 class="modal-title">Modal Header</h4>' + '</div>' + '<div class="modal-body">' + '<p>Some text in the modal.</p>' + '</div>' + '<div class="modal-footer">' + '<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>' + '</div>' + '</div>' + '</div>' + '</div>');
 
 //Button default to action option
-var actionBtnHTML = $.parseHTML('<button id="actionBtnBeatalPluginModal" type="button" class="btn btn-primary btn-sm">Action Button</button>');
+var actionBtnHTML = $.parseHTML('<button id="actionBtnBeatalPluginModal" type="button" class="btn btn-info btn-sm">Action Button</button>');
 
 //Defining the icon types
 var warningIconTypeHTML = $.parseHTML('<i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true" style="float:left; margin-right:20px;"></i>');
