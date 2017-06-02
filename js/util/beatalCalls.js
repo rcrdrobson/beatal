@@ -25,7 +25,7 @@ global.beatal = function beatalCall(type,title,text,textBtnClose,actionBtnText,a
   }
   //Put action button
   if(actionBtnFunction!=null){
-    $(actionBtnHTML).click(actionBtnFunction);
+    $(actionBtnHTML).click(function(){actionBtnFunction();$(modalTemplateHTML).find(".btn.btn-default").click();});
   }
 
   //Open modal

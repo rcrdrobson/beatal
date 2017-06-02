@@ -33,7 +33,9 @@ global.beatal = function beatalCall(type, title, text, textBtnClose, actionBtnTe
   }
   //Put action button
   if (actionBtnFunction != null) {
-    $(_exportSingleModal.actionBtnHTML).click(actionBtnFunction);
+    $(_exportSingleModal.actionBtnHTML).click(function () {
+      actionBtnFunction();$(_exportSingleModal.modalTemplateHTML).find(".btn.btn-default").click();
+    });
   }
 
   //Open modal
