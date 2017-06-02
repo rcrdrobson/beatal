@@ -1,0 +1,28 @@
+{
+  "name": "beatal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "beatal.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "browserify js/beatal.js -o bundle.js -t [ babelify --presets [ es2015 react ] ]"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rcrdrobson/beatal.git"
+  },
+  "author": "Ricardo Robson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rcrdrobson/beatal/issues"
+  },
+  "homepage": "https://github.com/rcrdrobson/beatal#readme",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babelify": "^7.3.0",
+    "browserify": "^14.4.0"
+  }
+}
