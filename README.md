@@ -12,7 +12,8 @@ For example, see a **Success Beatal**
 
 
 
-To call **Beatal**, you can use: **beatal(typeBeatal,titleBeatal,textBeatal,textBtnClose,actionBtnText,actionBtnFunction);**
+To call **Beatal**, you can use: 
+>**beatal(typeBeatal,titleBeatal,textBeatal,textBtnClose,actionBtnText,actionBtnFunction);**
 
 When:
 
