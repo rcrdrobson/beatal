@@ -27,12 +27,24 @@ You can import this **Beatal**'s script:
 > https://github.com/rcrdrobson/beatal/tree/master/dist/beatal.min.js
 
 To do this, **put this** in your HTML page:
-> <script src=" https://rawgit.com/rcrdrobson/beatal/master/dist/beatal.min.js "></script>
+> \<script src=" https://rawgit.com/rcrdrobson/beatal/master/dist/beatal.min.js "></script>
 
 Or, you can download the 'dist/' folder and use:
-> <script src=" dist/beatal.min.js"></script>
+> \<script src=" dist/beatal.min.js ">\</script>
 or
-> <script src=" dist/beatal.js"></script>
+> \<script src=" dist/beatal.js ">\</script>
+
+### Dependencies
+You must have in your project the **Bootstrap**, **Jquery** and **Font-Awesome".
+
+You can put this between HEAD tag:
+> \<script src=" https://use.fontawesome.com/57bb343fdc.js ">\</script>
+
+> \<script src=" https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js ">\</script>
+
+> \<link rel="stylesheet" href=" https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css " integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+> \<script src=" https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js " integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 ## Contribute and license
 **Beatal** was created by **Ricardo Robson**, you can follow him on [Twitter](https://twitter.com/rcrdrobson) or [Facebook](https://www.facebook.com/rcrdrobson) for updates and other projects!
