@@ -1,7 +1,7 @@
 {
   "name": "beatal",
   "version": "1.0.0",
-  "description": "",
+  "description": "A beautiful alternative for 'alert' JS, using Bootstrap's Modal",
   "main": "beatal.js",
   "directories": {
     "test": "test"
