@@ -14,92 +14,93 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var _exportSingleModal = require('./exportSingleModal');
 
 //Aux vars
-var modalTemplateHTML; //Import the util datas
+$(document).ready(function () {
+  var modalTemplateHTML;
+  var actionBtnHTML;
+  var warningIconTypeHTML;
+  var errorIconTypeHTML;
+  var successIconTypeHTML;
 
-var actionBtnHTML;
-var warningIconTypeHTML;
-var errorIconTypeHTML;
-var successIconTypeHTML;
+  global.beatal = function beatalCall(type, title, text, textBtnClose, actionBtnText, actionBtnFunction) {
+    //Setting Template Modal
+    makeTemplate();
 
-global.beatal = function beatalCall(type, title, text, textBtnClose, actionBtnText, actionBtnFunction) {
-  //Setting Template Modal
-  makeTemplate();
+    //Writting the Modal's div if not exist
+    makeModalDiv();
 
-  //Writting the Modal's div if not exist
-  makeModalDiv();
+    //Setting the Modal's attrs
+    putAttrsTemplate(type, title, text, textBtnClose, actionBtnText, actionBtnFunction);
 
-  //Setting the Modal's attrs
-  putAttrsTemplate(type, title, text, textBtnClose, actionBtnText, actionBtnFunction);
+    //Writting Modal in its div
+    writeModal();
+  };
 
-  //Writting Modal in its div
-  writeModal();
-};
-
-//********************
-//Aux functions
-//********************
-function clearModal() {
-  $('.modal-backdrop').remove();
-}
-
-function makeTemplate() {
-  //Setting Template Modal
-  modalTemplateHTML = (0, _exportSingleModal.getModalTemplateHTML)();
-  actionBtnHTML = (0, _exportSingleModal.getActionBtnHTML)();
-  warningIconTypeHTML = (0, _exportSingleModal.getWarningIconTypeHTML)();
-  errorIconTypeHTML = (0, _exportSingleModal.getErrorIconTypeHTML)();
-  successIconTypeHTML = (0, _exportSingleModal.getSuccessIconTypeHTML)();
-}
-
-function makeModalDiv() {
-  //Writting the Modal's div if not exist
-  if ($("#tempDivBeatal").size() == 0) {
-    $("body").append("<div id=\"tempDivBeatal\"></div>");
-  } else {
-    $("#tempDivBeatal").html("");
+  //********************
+  //Aux functions
+  //********************
+  function clearModal() {
+    $('.modal-backdrop').remove();
   }
-}
 
-function putAttrsTemplate(type, title, text, textBtnClose, actionBtnText, actionBtnFunction) {
-  //Setting the Modal's attrs
-  //Put Title
-  $(modalTemplateHTML).find(".modal-title").html(title);
-  //Put Text
-  $(modalTemplateHTML).find(".modal-body>p").html(text);
-  //Put text Button Close
-  if (textBtnClose != null) {
-    $(modalTemplateHTML).find(".btn.btn-default").html(textBtnClose);
-    $(modalTemplateHTML).find(".btn.btn-default").click(function () {
-      clearModal();
-    });
+  function makeTemplate() {
+    //Setting Template Modal
+    modalTemplateHTML = (0, _exportSingleModal.getModalTemplateHTML)();
+    actionBtnHTML = (0, _exportSingleModal.getActionBtnHTML)();
+    warningIconTypeHTML = (0, _exportSingleModal.getWarningIconTypeHTML)();
+    errorIconTypeHTML = (0, _exportSingleModal.getErrorIconTypeHTML)();
+    successIconTypeHTML = (0, _exportSingleModal.getSuccessIconTypeHTML)();
   }
-  //Put icon type before the title
-  if (type === "warning") {
-    $(warningIconTypeHTML).insertBefore($(modalTemplateHTML).find(".modal-title")).css("color", "#f0ad4e");
-  } else if (type === "error") {
-    $(errorIconTypeHTML).insertBefore($(modalTemplateHTML).find(".modal-title")).css("color", "#d9534f");
-  } else if (type === "success") {
-    $(successIconTypeHTML).insertBefore($(modalTemplateHTML).find(".modal-title")).css("color", "#449d44");
-  }
-  //Put Button Action if exist his name
-  if (actionBtnText != null) {
-    $(modalTemplateHTML).find(".modal-footer").append(actionBtnHTML);
-    $(modalTemplateHTML).find(".btn.btn-info").html(actionBtnText);
-  }
-  //Put Action Function in Button
-  if (actionBtnFunction != null) {
-    $(actionBtnHTML).click(function () {
-      $(modalTemplateHTML).find(".btn.btn-default").click();
-      actionBtnFunction();
-    });
-  }
-}
 
-function writeModal() {
-  //Writting Modal in its div
-  $("#tempDivBeatal").html($(modalTemplateHTML));
-  $(modalTemplateHTML).modal('show');
-}
+  function makeModalDiv() {
+    //Writting the Modal's div if not exist
+    if ($("#tempDivBeatal").length == 0) {
+      $("body").append("<div id=\"tempDivBeatal\"></div>");
+    } else {
+      $("#tempDivBeatal").html("");
+    }
+  }
+
+  function putAttrsTemplate(type, title, text, textBtnClose, actionBtnText, actionBtnFunction) {
+    //Setting the Modal's attrs
+    //Put Title
+    $(modalTemplateHTML).find(".modal-title").html(title);
+    //Put Text
+    $(modalTemplateHTML).find(".modal-body>p").html(text);
+    //Put text Button Close
+    if (textBtnClose != null) {
+      $(modalTemplateHTML).find(".btn.btn-default").html(textBtnClose);
+      $(modalTemplateHTML).find(".btn.btn-default").click(function () {
+        clearModal();
+      });
+    }
+    //Put icon type before the title
+    if (type === "warning") {
+      $(warningIconTypeHTML).insertBefore($(modalTemplateHTML).find(".modal-title")).css("color", "#f0ad4e");
+    } else if (type === "error") {
+      $(errorIconTypeHTML).insertBefore($(modalTemplateHTML).find(".modal-title")).css("color", "#d9534f");
+    } else if (type === "success") {
+      $(successIconTypeHTML).insertBefore($(modalTemplateHTML).find(".modal-title")).css("color", "#449d44");
+    }
+    //Put Button Action if exist his name
+    if (actionBtnText != null) {
+      $(modalTemplateHTML).find(".modal-footer").append(actionBtnHTML);
+      $(modalTemplateHTML).find(".btn.btn-info").html(actionBtnText);
+    }
+    //Put Action Function in Button
+    if (actionBtnFunction != null) {
+      $(actionBtnHTML).click(function () {
+        $(modalTemplateHTML).find(".btn.btn-default").click();
+        actionBtnFunction();
+      });
+    }
+  }
+
+  function writeModal() {
+    //Writting Modal in its div
+    $("#tempDivBeatal").html($(modalTemplateHTML));
+    $(modalTemplateHTML).modal('show');
+  }
+}); //Import the util datas
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./exportSingleModal":3}],3:[function(require,module,exports){
