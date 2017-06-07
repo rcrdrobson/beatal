@@ -4,7 +4,7 @@ A beautiful alternative for 'alert' JS, using Bootstrap's Modal
 ## How it works?
 With a simple call, **Beatal** (a JS plugin) displays an elegant (and **customizable**) alert (or... a Modal Bootstrap). 
 It is great for alerts, errors and success.
-For example, [see a **Success Beatal**](https://github.com/rcrdrobson/beatal/tree/master/docs/imgs/successExample.png).
+For example, see a **Success Beatal** ![Success Beatal example](https://github.com/rcrdrobson/beatal/raw/master/docs/imgs/successExample.png).
 
 To call **Beatal**, you can use: **beatal(typeBeatal,titleBeatal,textBeatal,textBtnClose,actionBtnText,actionBtnFunction);**
 
