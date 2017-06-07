@@ -1,7 +1,54 @@
 //Import the util datas
-import { modalTemplateHTML, actionBtnHTML, warningIconTypeHTML, errorIconTypeHTML , successIconTypeHTML } from './exportSingleModal';
+import {getModalTemplateHTML, getActionBtnHTML, getWarningIconTypeHTML, getErrorIconTypeHTML , getSuccessIconTypeHTML} from './exportSingleModal';
+
+//Aux vars
+var modalTemplateHTML;
+var actionBtnHTML;
+var warningIconTypeHTML;
+var errorIconTypeHTML;
+var successIconTypeHTML;
 
 global.beatal = function beatalCall(type,title,text,textBtnClose,actionBtnText,actionBtnFunction){
+  //Setting Template Modal
+  makeTemplate();
+
+  //Writting the Modal's div if not exist
+  makeModalDiv();
+
+  //Setting the Modal's attrs
+  putAttrsTemplate(type,title,text,textBtnClose,actionBtnText,actionBtnFunction);
+
+  //Writting Modal in its div
+  writeModal();
+}
+
+//********************
+//Aux functions
+//********************
+function clearModal(){
+  $('.modal-backdrop').remove();
+}
+
+function makeTemplate(){
+  //Setting Template Modal
+  modalTemplateHTML=getModalTemplateHTML();
+  actionBtnHTML=getActionBtnHTML();
+  warningIconTypeHTML=getWarningIconTypeHTML();
+  errorIconTypeHTML=getErrorIconTypeHTML();
+  successIconTypeHTML=getSuccessIconTypeHTML();
+}
+
+function makeModalDiv(){
+  //Writting the Modal's div if not exist
+  if($("#tempDivBeatal").size() == 0){
+    $("body").append("<div id=\"tempDivBeatal\"></div>");
+  }else{
+    $("#tempDivBeatal").html("");
+  }
+}
+
+function putAttrsTemplate(type,title,text,textBtnClose,actionBtnText,actionBtnFunction){
+  //Setting the Modal's attrs
   //Put Title
   $(modalTemplateHTML).find(".modal-title").html(title);
   //Put Text
@@ -10,7 +57,7 @@ global.beatal = function beatalCall(type,title,text,textBtnClose,actionBtnText,a
   if(textBtnClose!=null){
     $(modalTemplateHTML).find(".btn.btn-default").html(textBtnClose);
     $(modalTemplateHTML).find(".btn.btn-default").click(function(){
-                                                          clearModal()
+                                                          clearModal();
                                                         });
   }
   //Put icon type before the title
@@ -21,28 +68,22 @@ global.beatal = function beatalCall(type,title,text,textBtnClose,actionBtnText,a
   }else if(type==="success"){
     $(successIconTypeHTML).insertBefore($(modalTemplateHTML).find(".modal-title")).css("color", "#449d44");
   }
-  //Put Button Action
+  //Put Button Action if exist his name
   if(actionBtnText!=null){
     $(modalTemplateHTML).find(".modal-footer").append(actionBtnHTML);
     $(modalTemplateHTML).find(".btn.btn-info").html(actionBtnText);
   }
-  //Put action button
+  //Put Action Function in Button
   if(actionBtnFunction!=null){
     $(actionBtnHTML).click(function(){
-                              actionBtnFunction();
                               $(modalTemplateHTML).find(".btn.btn-default").click();
-                             });
+                              actionBtnFunction();        
+      });
   }
-
-  //Open modal
-  //$(modalTemplateHTML).modal('show');
-  $("body").append("<div id='tempDivBeatal'></div>");
-  $("#tempDivBeatal").append($(modalTemplateHTML));
-  $(modalTemplateHTML).modal('show');
 }
 
-global.clearModal = function clearModal(){
-  $('body').removeClass('modal-open');
-  $('.modal-backdrop').remove();
-  $("#tempDivBeatal").remove();
+function writeModal(){
+  //Writting Modal in its div
+  $("#tempDivBeatal").html($(modalTemplateHTML));
+  $(modalTemplateHTML).modal('show');
 }

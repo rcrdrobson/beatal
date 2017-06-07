@@ -3,58 +3,103 @@
 
 var _beatalCalls = require("./util/beatalCalls");
 
+var beatal = _interopRequireWildcard(_beatalCalls);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 },{"./util/beatalCalls":2}],2:[function(require,module,exports){
 (function (global){
-"use strict";
+'use strict';
 
-var _exportSingleModal = require("./exportSingleModal");
+var _exportSingleModal = require('./exportSingleModal');
+
+//Aux vars
+var modalTemplateHTML; //Import the util datas
+
+var actionBtnHTML;
+var warningIconTypeHTML;
+var errorIconTypeHTML;
+var successIconTypeHTML;
 
 global.beatal = function beatalCall(type, title, text, textBtnClose, actionBtnText, actionBtnFunction) {
+  //Setting Template Modal
+  makeTemplate();
+
+  //Writting the Modal's div if not exist
+  makeModalDiv();
+
+  //Setting the Modal's attrs
+  putAttrsTemplate(type, title, text, textBtnClose, actionBtnText, actionBtnFunction);
+
+  //Writting Modal in its div
+  writeModal();
+};
+
+//********************
+//Aux functions
+//********************
+function clearModal() {
+  $('.modal-backdrop').remove();
+}
+
+function makeTemplate() {
+  //Setting Template Modal
+  modalTemplateHTML = (0, _exportSingleModal.getModalTemplateHTML)();
+  actionBtnHTML = (0, _exportSingleModal.getActionBtnHTML)();
+  warningIconTypeHTML = (0, _exportSingleModal.getWarningIconTypeHTML)();
+  errorIconTypeHTML = (0, _exportSingleModal.getErrorIconTypeHTML)();
+  successIconTypeHTML = (0, _exportSingleModal.getSuccessIconTypeHTML)();
+}
+
+function makeModalDiv() {
+  //Writting the Modal's div if not exist
+  if ($("#tempDivBeatal").size() == 0) {
+    $("body").append("<div id=\"tempDivBeatal\"></div>");
+  } else {
+    $("#tempDivBeatal").html("");
+  }
+}
+
+function putAttrsTemplate(type, title, text, textBtnClose, actionBtnText, actionBtnFunction) {
+  //Setting the Modal's attrs
   //Put Title
-  $(_exportSingleModal.modalTemplateHTML).find(".modal-title").html(title);
+  $(modalTemplateHTML).find(".modal-title").html(title);
   //Put Text
-  $(_exportSingleModal.modalTemplateHTML).find(".modal-body>p").html(text);
+  $(modalTemplateHTML).find(".modal-body>p").html(text);
   //Put text Button Close
   if (textBtnClose != null) {
-    $(_exportSingleModal.modalTemplateHTML).find(".btn.btn-default").html(textBtnClose);
-    $(_exportSingleModal.modalTemplateHTML).find(".btn.btn-default").click(function () {
+    $(modalTemplateHTML).find(".btn.btn-default").html(textBtnClose);
+    $(modalTemplateHTML).find(".btn.btn-default").click(function () {
       clearModal();
     });
   }
   //Put icon type before the title
   if (type === "warning") {
-    $(_exportSingleModal.warningIconTypeHTML).insertBefore($(_exportSingleModal.modalTemplateHTML).find(".modal-title")).css("color", "#f0ad4e");
+    $(warningIconTypeHTML).insertBefore($(modalTemplateHTML).find(".modal-title")).css("color", "#f0ad4e");
   } else if (type === "error") {
-    $(_exportSingleModal.errorIconTypeHTML).insertBefore($(_exportSingleModal.modalTemplateHTML).find(".modal-title")).css("color", "#d9534f");
+    $(errorIconTypeHTML).insertBefore($(modalTemplateHTML).find(".modal-title")).css("color", "#d9534f");
   } else if (type === "success") {
-    $(_exportSingleModal.successIconTypeHTML).insertBefore($(_exportSingleModal.modalTemplateHTML).find(".modal-title")).css("color", "#449d44");
+    $(successIconTypeHTML).insertBefore($(modalTemplateHTML).find(".modal-title")).css("color", "#449d44");
   }
-  //Put Button Action
+  //Put Button Action if exist his name
   if (actionBtnText != null) {
-    $(_exportSingleModal.modalTemplateHTML).find(".modal-footer").append(_exportSingleModal.actionBtnHTML);
-    $(_exportSingleModal.modalTemplateHTML).find(".btn.btn-info").html(actionBtnText);
+    $(modalTemplateHTML).find(".modal-footer").append(actionBtnHTML);
+    $(modalTemplateHTML).find(".btn.btn-info").html(actionBtnText);
   }
-  //Put action button
+  //Put Action Function in Button
   if (actionBtnFunction != null) {
-    $(_exportSingleModal.actionBtnHTML).click(function () {
+    $(actionBtnHTML).click(function () {
+      $(modalTemplateHTML).find(".btn.btn-default").click();
       actionBtnFunction();
-      $(_exportSingleModal.modalTemplateHTML).find(".btn.btn-default").click();
     });
   }
+}
 
-  //Open modal
-  //$(modalTemplateHTML).modal('show');
-  $("body").append("<div id='tempDivBeatal'></div>");
-  $("#tempDivBeatal").append($(_exportSingleModal.modalTemplateHTML));
-  $(_exportSingleModal.modalTemplateHTML).modal('show');
-}; //Import the util datas
-
-
-global.clearModal = function clearModal() {
-  $('body').removeClass('modal-open');
-  $('.modal-backdrop').remove();
-  $("#tempDivBeatal").remove();
-};
+function writeModal() {
+  //Writting Modal in its div
+  $("#tempDivBeatal").html($(modalTemplateHTML));
+  $(modalTemplateHTML).modal('show');
+}
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./exportSingleModal":3}],3:[function(require,module,exports){
@@ -64,22 +109,33 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 //A single modal template Boostrap
-var modalTemplateHTML = $.parseHTML('<!-- Modal -->' + '<div class="modal fade" id="beatalPluginModal" role="dialog">' + '<div class="modal-dialog modal-sm">' + '<!-- Modal content-->' + '<div class="modal-content">' + '<div class="modal-header">'
-//+'<button type="button" class="close" data-dismiss="modal">&times;</button>'
-+ '<h4 class="modal-title">Modal Header</h4>' + '</div>' + '<div class="modal-body">' + '<p>Some text in the modal.</p>' + '</div>' + '<div class="modal-footer">' + '<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>' + '</div>' + '</div>' + '</div>' + '</div>');
+function getModalTemplateHTML() {
+  return $.parseHTML('<!-- Modal -->' + '<div class="modal fade" id="beatalPluginModal" role="dialog">' + '<div class="modal-dialog modal-sm">' + '<!-- Modal content-->' + '<div class="modal-content">' + '<div class="modal-header">'
+  //+'<button type="button" class="close" data-dismiss="modal">&times;</button>'
+  + '<h4 class="modal-title">Modal Header</h4>' + '</div>' + '<div class="modal-body">' + '<p>Some text in the modal.</p>' + '</div>' + '<div class="modal-footer">' + '<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>' + '</div>' + '</div>' + '</div>' + '</div>');
+}
 
 //Button default to action option
-var actionBtnHTML = $.parseHTML('<button id="actionBtnBeatalPluginModal" type="button" class="btn btn-info btn-sm">Action Button</button>');
-
+function getActionBtnHTML() {
+  return $.parseHTML('<button id="actionBtnBeatalPluginModal" type="button" class="btn btn-info btn-sm">Action Button</button>');
+}
 //Defining the icon types
-var warningIconTypeHTML = $.parseHTML('<i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true" style="float:left; margin-right:20px;"></i>');
-var errorIconTypeHTML = $.parseHTML('<i class="fa fa-exclamation-circle fa-2x" aria-hidden="true" style="float:left; margin-right:20px;"></i>');
-var successIconTypeHTML = $.parseHTML('<i class="fa fa-check-circle fa-2x" aria-hidden="true" style="float:left; margin-right:20px;"></i>');
+function getWarningIconTypeHTML() {
+  return $.parseHTML('<i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true" style="float:left; margin-right:20px;"></i>');
+}
 
-exports.modalTemplateHTML = modalTemplateHTML;
-exports.actionBtnHTML = actionBtnHTML;
-exports.warningIconTypeHTML = warningIconTypeHTML;
-exports.errorIconTypeHTML = errorIconTypeHTML;
-exports.successIconTypeHTML = successIconTypeHTML;
+function getErrorIconTypeHTML() {
+  return $.parseHTML('<i class="fa fa-exclamation-circle fa-2x" aria-hidden="true" style="float:left; margin-right:20px;"></i>');
+}
+
+function getSuccessIconTypeHTML() {
+  return $.parseHTML('<i class="fa fa-check-circle fa-2x" aria-hidden="true" style="float:left; margin-right:20px;"></i>');
+}
+
+exports.getModalTemplateHTML = getModalTemplateHTML;
+exports.getActionBtnHTML = getActionBtnHTML;
+exports.getWarningIconTypeHTML = getWarningIconTypeHTML;
+exports.getErrorIconTypeHTML = getErrorIconTypeHTML;
+exports.getSuccessIconTypeHTML = getSuccessIconTypeHTML;
 
 },{}]},{},[1]);

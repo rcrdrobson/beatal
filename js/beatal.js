@@ -1,2 +1,2 @@
 "use strict";
-import { beatalCall } from './util/beatalCalls';
+import * as beatal from './util/beatalCalls';
