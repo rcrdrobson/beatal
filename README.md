@@ -31,7 +31,7 @@ When:
 
 ## Get started
 You can import this **Beatal**'s script:
-> https://github.com/rcrdrobson/beatal/tree/master/dist/beatal.min.js
+> https://rawgit.com/rcrdrobson/beatal/master/dist/beatal.min.js
 
 To do this, **put this** in your HTML page:
 > \<script src=" https://rawgit.com/rcrdrobson/beatal/master/dist/beatal.min.js "></script>
