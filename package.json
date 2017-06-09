@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "build": "browserify dev/beatal.js -o dist/beatal.js -t [ babelify --presets [ es2015 react ] ] | uglifyjs dist/beatal.js --output beatal.min.js;"
+    "build": "browserify dev/beatal.js -o dist/beatal.js -t [ babelify --presets [ es2015 react ] ] | uglifyjs dist/beatal.js --output dist/beatal.min.js"
   },
   "repository": {
     "type": "git",

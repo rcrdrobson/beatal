@@ -86,6 +86,7 @@ import {getModalTemplateHTML, getActionBtnHTML, getWarningIconTypeHTML, getError
   function writeModal(){
     //Writting Modal in its div
     $("#tempDivBeatal").html($(modalTemplateHTML));
+    $(modalTemplateHTML).modal({backdrop: 'static', keyboard: false}) 
     $(modalTemplateHTML).modal('show');
   }
 });

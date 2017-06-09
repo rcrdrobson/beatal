@@ -98,6 +98,7 @@ $(document).ready(function () {
   function writeModal() {
     //Writting Modal in its div
     $("#tempDivBeatal").html($(modalTemplateHTML));
+    $(modalTemplateHTML).modal({ backdrop: 'static', keyboard: false });
     $(modalTemplateHTML).modal('show');
   }
 }); //Import the util datas
